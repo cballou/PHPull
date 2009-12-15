@@ -1,0 +1,11 @@
+#tt { display:block; position:absolute; background-color: #191919; color: #fff; border: 2px solid #111; padding: 10px; font-size: 10px; }
+#tt .loading { display: block; height: 100px; width: 100px; margin: 0 auto; background: transparent url('/wordpress/wp-content/plugins/phpull/img/loading.gif') 0 0 no-repeat; }
+#tt div { line-height: 16px; }
+#tt .phpwrapper { display: none; }
+#tt h4 { color: #0191C8; font-size: 14px; margin: 8px 0 2px; font-weight: bold; font-family:'Lucida Sans Unicode','Tahoma','Arial Black',Arial; }
+#tt .title { line-height: 14px; }
+#tt .title strong { color: #0191C8; font-size: 14px; font-weight: bold; font-family:'Lucida Sans Unicode','Tahoma','Arial Black',Arial; }
+#tt .short_desc { }
+#tt .method { }
+#tt .desc { }
+#tt .returnvals { }
