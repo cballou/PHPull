@@ -108,19 +108,32 @@ class PHPull {
 	 */
 	function phpull_shortcode($attrs, $content = null) {
 		// if no function is specified, return
-		if (is_null($content)) return false;
-		// make sure we only obtain class attribute
-		extract(shortcode_atts(array('class'=>null, 'show'=>''), $attrs));
+		if (is_null($content)) return '';
+		// obtain any attributes
+		extract(shortcode_atts(array('class' => null, 'show' => ''), $attrs));
+		// clean the class if set
+		if ($class != null) {
+			$class = preg_replace('/[^A-Za-z0-9_]*/', '', html_entity_decode($class));
+		}
 		// determine if returning display version or transformed version
 		if ($show != '') {
 			// return version for sample display
-			return ($class != null) ? '[phpull class="' . htmlentities(str_replace('"', '', $class)) . '"]' . $content . '[/phpull]' : '[phpull]' . $content . '[/phpull]';
-		} else {
-			if (($class != null) && strpos($content, '::') === false) {
-				$content = htmlentities($class) . '::' . $content;
+			if ($class != null) {
+				return '[phpull class="' . $class . '"]' . $content . '[/phpull]';
+			} else {
+				return '[phpull]' . $content . '[/phpull]';
 			}
-			// return replaced instance
-			return '<a href="#" title="' . (($class != null) ? htmlentities($class) : '') . '" onmouseout="php_tooltip.hide();" onmouseover="php_tooltip.show(this);">' . $content . '</a>';
+		} else {
+			// :: takes precedence over class attribute
+			$title = '';
+			if ($class != null && (strpos($content, '::') === false)) {
+				$content = $class . '::' . $content;
+				$title = ' title="' . $class . '"';
+			} else if ($class != null && (strpos($content, '::') !== false)) {
+				$class = substr($content, 0, strpos($content, '::'));
+				$title = ' title="' . $class . '"';
+			}
+			return '<a href="#"' . $title . ' onmouseout="php_tooltip.hide();" onmouseover="php_tooltip.show(this);">' . htmlentities($content) . '</a>';
 		}
 	}
 
